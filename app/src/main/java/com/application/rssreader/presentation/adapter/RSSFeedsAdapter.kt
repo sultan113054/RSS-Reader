@@ -55,6 +55,11 @@ class RSSFeedsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 item.thumbnail
             )
 
+            binding.root.setOnClickListener {
+                onItemClickListener?.let {
+                    it(item)
+                }
+            }
         }
     }
 

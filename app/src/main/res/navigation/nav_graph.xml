@@ -8,5 +8,15 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.application.rssreader.presentation.ui.RSSFeedsListFragment"
-        tools:layout="@layout/fragment_rss_feeds_list" />
+        android:label="@string/rss_feed_toolbar_title"
+        tools:layout="@layout/fragment_rss_feeds_list">
+        <action
+            android:id="@+id/action_homeFragment_to_RSSStoriesFragment"
+            app:destination="@id/RSSStoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RSSStoriesFragment"
+        android:name="com.application.rssreader.presentation.ui.RSSStoriesFragment"
+        android:label="@string/rss_stories_toolbar_title"
+        tools:layout="@layout/fragment_rss_stories" />
 </navigation>

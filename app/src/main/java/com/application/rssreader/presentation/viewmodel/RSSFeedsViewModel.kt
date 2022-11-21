@@ -1,5 +1,7 @@
 package com.application.rssreader.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.rssreader.DataState
@@ -20,6 +22,15 @@ class RSSFeedsViewModel(
     private val _uiState =
         MutableStateFlow<ViewState<List<RSSFeedModel>>>(ViewState.Loading())
     val uiState: StateFlow<ViewState<List<RSSFeedModel>>> = _uiState
+    private var item = MutableLiveData<RSSFeedModel>()
+
+    val getItem: LiveData<RSSFeedModel>
+        get() = item
+
+    fun setSelectedListItem(product: RSSFeedModel) {
+        this.item.value = product
+
+    }
 
     fun getRSSFeeds() {
         viewModelScope.launch(Dispatchers.IO) {

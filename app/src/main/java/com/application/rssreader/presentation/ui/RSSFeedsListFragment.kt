@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.rssreader.core.exception.Failure
 import com.application.rssreader.core.extension.invisible
@@ -62,6 +63,13 @@ class RSSFeedsListFragment : Fragment() {
                     onViewStateChange(it)
                 }
             }
+        }
+
+        rssFeedsAdapter.setOnItemClickListener {
+            rssFeedsViewModel.setSelectedListItem(it)
+            findNavController().navigate(
+                R.id.action_homeFragment_to_RSSStoriesFragment,
+            )
         }
         rssFeedsViewModel.getRSSFeeds()
     }

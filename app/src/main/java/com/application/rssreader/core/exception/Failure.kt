@@ -5,5 +5,6 @@ sealed class Failure {
     object ServerError : Failure()
     object DBError : Failure()
     object Empty : Failure()
+    object None:Failure()
     abstract class FeatureFailure : Failure()
 }

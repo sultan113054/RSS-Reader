@@ -7,11 +7,11 @@ sealed class DataResponse<T>
 
 data class DataSuccessResponse<T>(
     val data: T? = null,
-    val message: String? = null,
+    val failure:DataErrorResponse<T>?=null,
 ) : DataResponse<T>()
 
 data class DataErrorResponse<T>(
     val statusCode: Int = INTERNAL_ERROR,
-    val reason: Failure = Failure.NetworkConnection,
+    val reason: Failure = Failure.None,
     val errorMessage: String? = null,
 ) : DataResponse<T>()

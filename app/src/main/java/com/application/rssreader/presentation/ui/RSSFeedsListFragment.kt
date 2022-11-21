@@ -83,12 +83,18 @@ class RSSFeedsListFragment : Fragment() {
             hideNoDataText()
         }
         is ViewState.Error -> {
+            hideProgressBar()
+            showNoDataText()
             handleFailure(uiState.statusCode, uiState.reason, uiState.errorMessage)
         }
         is ViewState.Success -> uiState.data.let {
             hideProgressBar()
             hideNoDataText()
             showRecyclerView()
+            uiState.failure?.let {
+                handleFailure(it.statusCode, it.reason, it.errorMessage)
+
+            }
             rssFeedsAdapter.differ.submitList(it)
 
         }
@@ -104,9 +110,6 @@ class RSSFeedsListFragment : Fragment() {
     }
 
     private fun handleFailure(statusCode: Int, failure: Failure, message: String?) {
-        hideProgressBar()
-        showNoDataText()
-
         when (failure) {
             is Failure.NetworkConnection -> {
                 notify(message ?: getString(R.string.failure_network_connection))
@@ -120,6 +123,7 @@ class RSSFeedsListFragment : Fragment() {
             is RSSFeedsFailure.NoDataAvailable -> {
                 notify(message ?: getString(R.string.no_data))
             }
+            is Failure.None -> {}
             else -> {
                 notify(message ?: getString(R.string.failure_server_error))
             }

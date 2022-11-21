@@ -53,7 +53,7 @@ class RSSFeedsViewModel(
 
     private fun handleSuccess(dataSuccessResponse: DataSuccessResponse<List<RSSFeedModel>>) {
         _uiState.value =
-            ViewState.Success(dataSuccessResponse.data, message = dataSuccessResponse.message)
+            ViewState.Success(dataSuccessResponse.data, failure = dataSuccessResponse.failure)
     }
 }
 

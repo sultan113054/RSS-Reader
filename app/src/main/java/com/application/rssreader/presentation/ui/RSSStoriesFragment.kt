@@ -59,7 +59,7 @@ class RSSStoriesFragment : Fragment() {
                         view: WebView?, request: WebResourceRequest?, error: WebResourceError?,
                     ) {
                         super.onReceivedError(view, request, error)
-
+                        view?.visible()
                         binding.progressBar.invisible()
 
                     }

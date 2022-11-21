@@ -5,6 +5,9 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
+def versionMajor = 1
+def versionMinor = 1
+def versionNumber = 1
 
 android {
     namespace 'com.application.rssreader'
@@ -14,8 +17,8 @@ android {
         applicationId "com.application.rssreader"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode versionNumber
+        versionName "${versionMajor}.${versionMinor}.${versionNumber}"
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         buildConfigField "String", "BASE_URL", "\"${properties.getProperty("BASE_URL")}\""
@@ -79,3 +82,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 }
 
+android.applicationVariants.all { variant ->
+    def appName = "rss_reader"
+    variant.outputs.all { output ->
+        def newApkName
+        newApkName = "${appName}-${variant.versionName}.apk"
+        output.outputFileName = new File(newApkName)
+    }
+}

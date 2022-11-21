@@ -23,6 +23,7 @@ import com.application.rssreader.presentation.viewmodel.RSSFeedsViewModel
 import com.application.rssreader.presentation.viewmodel.RSSFeedsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.application.rssreader.R
+import com.application.rssreader.core.platform.NetworkHandler
 import com.application.rssreader.databinding.FragmentRssFeedsListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -112,7 +113,8 @@ class RSSFeedsListFragment : Fragment() {
     private fun handleFailure(statusCode: Int, failure: Failure, message: String?) {
         when (failure) {
             is Failure.NetworkConnection -> {
-                notify(message ?: getString(R.string.failure_network_connection))
+                if (!NetworkHandler(requireActivity().applicationContext).isNetworkAvailable())
+                    notify(message ?: getString(R.string.failure_network_connection))
             }
             is Failure.ServerError -> {
                 notify(message ?: getString(R.string.failure_server_error))

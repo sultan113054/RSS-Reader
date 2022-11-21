@@ -10,7 +10,7 @@
         android:background="@color/white">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_products"
+            android:id="@+id/rv_rss_feeds"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/rss_feed_list_background"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            android:id="@+id/progressbar"
+            android:id="@+id/progressbar_rss_feeds"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

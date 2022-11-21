@@ -49,8 +49,8 @@ class RSSFeedsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: RSSFeedModel) {
-            binding.tvTitle.text = item.title
-            binding.tvDescription.text = item.description
+            binding.tvTitle.text = item.title?.trim()
+            binding.tvDescription.text = item.description?.trim()
             binding.ivThumbnail.loadFromUrl(
                 item.thumbnail
             )

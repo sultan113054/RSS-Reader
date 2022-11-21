@@ -103,7 +103,7 @@ class RSSFeedsListFragment : Fragment() {
 
 
     private fun initRecyclerView() {
-        binding.rvProducts.apply {
+        binding.rvRssFeeds.apply {
             layoutManager = LinearLayoutManager(activity)
             this.adapter = rssFeedsAdapter
         }
@@ -142,19 +142,19 @@ class RSSFeedsListFragment : Fragment() {
     }
 
     private fun showProgressBar() {
-        binding.progressbar.visible()
+        binding.progressbarRssFeeds.visible()
     }
 
     private fun hideProgressBar() {
-        binding.progressbar.invisible()
+        binding.progressbarRssFeeds.invisible()
     }
 
     private fun hideRecyclerView() {
-        binding.rvProducts.invisible()
+        binding.rvRssFeeds.invisible()
     }
 
     private fun showRecyclerView() {
-        binding.rvProducts.visible()
+        binding.rvRssFeeds.visible()
 
     }
 

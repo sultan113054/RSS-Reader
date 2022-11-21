@@ -24,8 +24,7 @@ class RSSFeedsRepositoryImpl(
         return when (networkHandler.isNetworkAvailable()) {
             true -> responseToResource(rssFeedsRemoteDataSource.getRssFeeds())
             false -> {
-                emitError(DataState.Error(DataErrorResponse(reason = Failure.NetworkConnection)))
-                getSavedData()
+                getSavedData(DataState.Error(DataErrorResponse(reason = Failure.NetworkConnection)))
             }
         }
     }
@@ -40,18 +39,17 @@ class RSSFeedsRepositoryImpl(
                 data?.let {
                     rssFeedsLocalDataSource.deleteRSSFeeds()
                     rssFeedsLocalDataSource.saveRSSFeeds(data)
-                    getSavedData()
+                    getSavedData(DataState.Error(DataErrorResponse()))
                 } ?: emitError(DataState.Error(DataErrorResponse(
                     reason = RSSFeedsFailure.NoDataAvailable())))
 
             }
             is DataState.Error -> {
-                emitError(DataState.Error(DataErrorResponse(statusCode = response.dataResponse.statusCode,
+                getSavedData(DataState.Error(DataErrorResponse(statusCode = response.dataResponse.statusCode,
                     reason = response.dataResponse.reason,
                     errorMessage = response.dataResponse.errorMessage)))
-                getSavedData()
             }
-            else -> getSavedData()
+            else -> getSavedData(DataState.Error(DataErrorResponse()))
         }
     }
 
@@ -60,10 +58,14 @@ class RSSFeedsRepositoryImpl(
             emit(dataState)
         }
 
-    private suspend fun getSavedData(): Flow<DataState<List<RSSFeedModel>>> =
+    private suspend fun getSavedData(dataState: DataState<List<RSSFeedModel>>): Flow<DataState<List<RSSFeedModel>>> =
         flow {
             rssFeedsLocalDataSource.getSavedRSSFeeds().map {
-                emit(DataState.Success(DataSuccessResponse(it.map { it.asModel() })))
+                if (it.isNotEmpty()) {
+                    emit(DataState.Success(DataSuccessResponse(it.map { it.asModel()})))
+                } else {
+                    emit(dataState)
+                }
             }.catch { emit(DataState.Error(DataErrorResponse(reason = Failure.DBError))) }.collect()
 
         }

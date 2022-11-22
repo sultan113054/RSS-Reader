@@ -3,7 +3,7 @@ package com.application.rssreader.data.util
 import com.application.rssreader.data.model.RSSFeedEntity
 import com.application.rssreader.data.model.RSSFeedModel
 import com.prof.rssparser.Article
-import com.application.rssreader.core.extension.RemoveHTMLTags
+import com.application.rssreader.core.extension.removeHTMLTags
 
 fun Article.asEntity() = RSSFeedEntity(0, title,
     description,
@@ -11,6 +11,6 @@ fun Article.asEntity() = RSSFeedEntity(0, title,
     link)
 
 fun RSSFeedEntity.asModel() = RSSFeedModel(title,
-    description?.RemoveHTMLTags(),
+    description?.removeHTMLTags(),
     thumbnail,
     link)
